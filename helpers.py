@@ -4,6 +4,7 @@ from pages.main_page import MainPage
 import allure
 import locators
 import data
+import time
 
 
 @allure.step('Создаем юзера с задаными данными')
@@ -41,3 +42,4 @@ def login_user(driver, email, password):
     page.click_account_button()
     page = LoginPage(driver)
     page.login_into_account(email, password)
+    time.sleep(0.3)

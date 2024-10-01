@@ -7,10 +7,9 @@ import data
 
 @pytest.fixture(params=[
     'chrome',
-    # 'firefox'
+    'firefox'
 ])
 def driver(request):
-    driver = None
     if request.param == 'firefox':
         driver = webdriver.Firefox()
     else:

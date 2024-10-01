@@ -26,6 +26,5 @@ class TestForgotPass:
         page.fill_mail(data.email)
         page.click_restore_pass()
         page = ResetPassPage(driver)
-        # time.sleep(3)
         page.click_show_pass()
         assert page.check_if_password_input_is_active()

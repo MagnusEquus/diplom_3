@@ -13,6 +13,7 @@ class LoginPage:
     email_input = [By.XPATH, locators.input_login_email_xpath]
     password_input = [By.XPATH, locators.input_login_pass_xpath]
     login_button = [By.XPATH, locators.login_button_xpath]
+    constructor_link_button = [By.XPATH, locators.constructor_button_xpath]
 
     def __init__(self, driver):
         self.driver = driver
@@ -26,3 +27,6 @@ class LoginPage:
         self.driver.find_element(*self.password_input).send_keys(password)
         self.driver.find_element(*self.login_button).click()
         WebDriverWait(self.driver, 10).until(expected_conditions.visibility_of_element_located(MainPage.account_link_button))
+
+    def click_constructor_button(self):
+        self.driver.find_element(*self.constructor_link_button).click()
