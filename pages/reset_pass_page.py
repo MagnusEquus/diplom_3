@@ -1,16 +1,17 @@
 from selenium.webdriver.common.by import By
+from pages.base_page import BasePage
 import allure
 import locators
 
 
-class ResetPassPage:
+class ResetPassPage(BasePage):
 
-    new_pass_input = [By.XPATH, locators.input_new_pass_xpath]
-    show_pass_button = [By.XPATH, locators.new_pass_show_xpath]
-    new_pass_input_parent = [By.XPATH, locators.new_pass_input_parent_xpath]
+    new_pass_input = [By.XPATH, locators.INPUT_NEW_PASS_XPATH]
+    show_pass_button = [By.XPATH, locators.NEW_PASS_SHOW_XPATH]
+    new_pass_input_parent = [By.XPATH, locators.NEW_PATH_INPUT_PARENT_XPATH]
 
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
     def click_show_pass(self):
         self.driver.find_element(*self.show_pass_button).click()

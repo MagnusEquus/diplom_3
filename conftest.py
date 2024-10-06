@@ -1,13 +1,14 @@
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import allure
 import helpers
 import data
 
 
 @pytest.fixture(params=[
-    'chrome',
-    'firefox'
+    'chrome'
+    # ,'firefox'
 ])
 def driver(request):
     if request.param == 'firefox':

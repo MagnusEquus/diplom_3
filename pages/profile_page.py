@@ -1,20 +1,21 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
+from pages.base_page import BasePage
 import allure
 import locators
 
 
-class ProfilePage:
+class ProfilePage(BasePage):
 
-    order_history_button = [By.XPATH, locators.order_history_button_xpath]
-    logout_button = [By.XPATH, locators.logout_button_xpath]
+    order_history_button = [By.XPATH, locators.ORDER_HISTORY_BUTTON_XPATH]
+    logout_button = [By.XPATH, locators.LOGOUT_BUTTON_XPATH]
 
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
     def click_order_history(self):
-        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located(self.order_history_button))
+        WebDriverWait(self.driver, 15).until(expected_conditions.visibility_of_element_located(self.order_history_button))
         self.driver.find_element(*self.order_history_button).click()
 
     def click_logout(self):

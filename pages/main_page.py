@@ -2,35 +2,33 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.common.action_chains import ActionChains
+from pages.base_page import BasePage
 import allure
 import locators
 
 
-class MainPage:
+class MainPage(BasePage):
 
-    account_link_button = [By.XPATH, locators.account_link_xpath]
-    feed_link_button = [By.XPATH, locators.feed_link_button_xpath]
-    first_ingredient = [By.XPATH, locators.first_ingredient_xpath]
-    ingredient_popup = [By.XPATH, locators.ingredient_popup_xpath]
-    ingredient_popup_close = [By.XPATH, locators.ingredient_popup_close_xpath]
-    ingredient_counter_value = [By.XPATH, locators.ingredient_counter_value_xpath]
-    first_bun_drop = [By.XPATH, locators.constructor_bun_first_dragndrop_xpath]
-    order_button = [By.XPATH, locators.order_button_xpath]
-    close_new_order_popup = [By.XPATH, locators.order_close_new_order_popup_xpath]
+    ingredient_by_name = [By.XPATH, locators.INGREDIENT_BY_NAME_XPATH]
+    ingredient_popup = [By.XPATH, locators.INGREDIENT_POPUP_XPATH]
+    ingredient_popup_close = [By.XPATH, locators.INGREDIENT_POPUP_CLOSE_XPATH]
+    ingredient_by_name_counter_value = [By.XPATH, locators.INGREDIENT_BY_NAME_COUNTER_XPATH]
+    first_bun_drop = [By.XPATH, locators.CONSTRUCTOR_BUN_FIRST_DRAGNDROP_XPATH]
+    order_button = [By.XPATH, locators.ORDER_BUTTON_XPATH]
+    close_new_order_popup_button = [By.XPATH, locators.ORDER_CLOSE_NEW_ORDER_POPUP_XPATH]
 
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
     def click_account_button(self):
-        self.driver.find_element(*self.account_link_button).click()
-        WebDriverWait(self.driver, 10).until(expected_conditions.visibility_of_element_located(self.account_link_button))
+        self.redirect(self.account_link_button, self.account_link_button)
 
     def click_feed_button(self):
-        self.driver.find_element(*self.feed_link_button).click()
-        WebDriverWait(self.driver, 10).until(expected_conditions.visibility_of_element_located(self.account_link_button))
+        self.redirect(self.feed_link_button, self.account_link_button)
 
-    def click_first_ingredient(self):
-        self.driver.find_element(*self.first_ingredient).click()
+    def click_ingredient_by_name(self, name):
+        super().variable_locator(self.ingredient_by_name, 'NAME', name).click()
+        # self.driver.find_element(*self.ingredient_by_name).click()
         WebDriverWait(self.driver, 10).until(expected_conditions.visibility_of_element_located(self.ingredient_popup))
 
     def check_ingredient_description_visible(self):
@@ -41,22 +39,24 @@ class MainPage:
         self.driver.find_element(*self.ingredient_popup_close).click()
         WebDriverWait(self.driver, 10).until(expected_conditions.invisibility_of_element_located(self.ingredient_popup))
 
-    def get_first_ingredient_counter_value(self):
-        return self.driver.find_element(*self.ingredient_counter_value).text
+    def get_ingredient_counter_value_by_name(self, name):
+        return super().variable_locator(self.ingredient_by_name_counter_value, 'NAME', name).text
 
-    def add_first_bun(self):
+    def add_ingredient_by_name(self, name):
         action = ActionChains(self.driver)
-        bun = self.driver.find_element(*self.first_ingredient)
+        bun = super().variable_locator(self.ingredient_by_name, 'NAME', name)
         target = self.driver.find_element(*self.first_bun_drop)
         action.drag_and_drop(bun, target).perform()
 
     def check_if_ordering_is_available(self):
+        WebDriverWait(self.driver, 15).until(expected_conditions.visibility_of_element_located(self.order_button))
         return self.driver.find_element(*self.order_button).is_displayed()
 
     def make_an_order(self):
+        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located(self.order_button))
         self.driver.find_element(*self.order_button).click()
 
     def close_new_order_popup(self):
-        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located(*self.close_new_order_popup))
-        self.driver.find_element(*self.close_new_order_popup).click()
+        WebDriverWait(self.driver, 15).until(expected_conditions.visibility_of_element_located(self.close_new_order_popup_button))
+        self.driver.find_element(*self.close_new_order_popup_button).click()
 

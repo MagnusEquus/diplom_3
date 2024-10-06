@@ -1,9 +1,10 @@
 URL = "https://stellarburgers.nomoreparties.site/api/"
-url_register = URL + "auth/register"
-url_user = URL + "auth/user"
-url_login = URL + "auth/login"
-url_order = URL + "orders"
+URL_REGISTER = URL + "auth/register"
+URL_USER = URL + "auth/user"
+URL_LOGIN = URL + "auth/login"
+URL_ORDER = URL + "orders"
 
 name = "test1"
 password = "1test1test"
 email = "magnusequus@yandex.ru"
+INGREDIENT = 'Флюоресцентная булка R2-D3'

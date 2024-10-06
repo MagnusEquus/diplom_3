@@ -1,24 +1,30 @@
+import time
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
+from pages.base_page import BasePage
 import allure
 import locators
 
 
-class FeedPage:
+class FeedPage(BasePage):
 
-    first_order = [By.XPATH, locators.feed_first_order_xpath]
-    close_order_popup = [By.XPATH, locators.feed_close_order_popup_xpath]
-    orders_list = [By.XPATH, locators.feed_order_list_xpath]
-    orders_overall_counter = [By.XPATH, locators.feed_orders_overall_xpath]
-    orders_today_counter = [By.XPATH, locators.feed_orders_today_xpath]
+    order_by_count = [By.XPATH, locators.FEED_ORDER_BY_COUNT_XPATH]
+    close_order_popup = [By.XPATH, locators.FEED_CLOSE_ORDER_POPUP_XPATH]
+    orders_list = [By.XPATH, locators.FEED_ORDER_LIST_XPATH]
+    orders_overall_counter = [By.XPATH, locators.FEED_ORDERS_OVERALL_XPATH]
+    orders_today_counter = [By.XPATH, locators.FEED_ORDERS_TODAY_XPATH]
+    current_order_by_count = [By.XPATH, locators.FEED_ORDER_NUMBER_XPATH]
+    order_in_progress = [By.XPATH, locators.FEED_ORDERNUMBER_IN_PROGRESS_XPATH]
 
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
     def open_first_order(self):
-        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located(self.first_order))
-        self.driver.find_element(*self.first_order).click()
+        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located(self.orders_list))
+        order = self.get_order_by_count(1)
+        order.click()
         WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located(self.close_order_popup))
 
     def popup_is_opened(self):
@@ -29,8 +35,8 @@ class FeedPage:
         list = self.driver.find_element(*self.orders_list)
         list_size = len(list.size)
         for i in range(1, list_size + 1):
-            current_order_locator = [By.XPATH, locators.feed_order_number_xpath.replace('ELEMENTNUMBER', str(i))]
-            current_order_number = self.driver.find_element(*current_order_locator).text
+            current_order = self.get_feed_order_by_count(i)
+            current_order_number = current_order.text
             if current_order_number == order_number:
                 return True
 
@@ -44,7 +50,18 @@ class FeedPage:
 
     def check_if_order_in_progress(self, order_number):
         order_number = str(order_number).replace('#0', '')
-        order_locator = locators.feed_ordernumber_in_progress_xpath.replace('ORDERNUMBER', order_number)
-        order_in_progress = [By.XPATH, order_locator]
-        WebDriverWait(self.driver, 15).until(expected_conditions.visibility_of_element_located(order_in_progress))
-        return '0' + str(order_number) == self.driver.find_element(*order_in_progress).text
+        order_in_progress = self.get_order_in_progress_by_number(order_number)
+        WebDriverWait(self.driver, 15).until(expected_conditions.visibility_of(order_in_progress))
+        return '0' + str(order_number) == order_in_progress.text
+
+    def get_order_by_count(self, number):
+        order = super().variable_locator(self.order_by_count, 'ORDERCOUNT', number)
+        return order
+
+    def get_feed_order_by_count(self, number):
+        order = super().variable_locator(self.current_order_by_count, 'ELEMENTNUMBER', number)
+        return order
+
+    def get_order_in_progress_by_number(self, order_number):
+        order = super().variable_locator(self.order_in_progress, 'ORDERNUMBER', order_number)
+        return order

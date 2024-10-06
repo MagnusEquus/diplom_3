@@ -8,20 +8,26 @@ import data
 
 class TestForgotPass:
 
+    @allure.title('переход на страницу восстановления пароля по кнопке «Восстановить пароль»')
+    @allure.description('')
     def test_redirect_to_forgot_pass_page(self, driver):
-        driver.get(locators.login_url)
+        driver.get(locators.LOGIN_URL)
         page = LoginPage(driver)
         page.goto_forgot_pass_page()
-        assert driver.current_url == locators.forgot_password_url
+        assert driver.current_url == locators.FORGOT_PASSWORD_URL
 
+    @allure.title('ввод почты и клик по кнопке «Восстановить»')
+    @allure.description('')
     def test_reset_pass(self, driver):
-        driver.get(locators.forgot_password_url)
+        driver.get(locators.FORGOT_PASSWORD_URL)
         page = ForgotPassPage(driver)
         page.fill_mail(data.email)
         page.click_restore_pass()
 
+    @allure.title('клик по кнопке показать/скрыть пароль делает поле активным — подсвечивает его')
+    @allure.description('')
     def test_input_active(self, driver):
-        driver.get(locators.reset_password_url)
+        driver.get(locators.RESET_PASSWORD_URL)
         page = ForgotPassPage(driver)
         page.fill_mail(data.email)
         page.click_restore_pass()
