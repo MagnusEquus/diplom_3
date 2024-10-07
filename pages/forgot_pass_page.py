@@ -2,7 +2,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from pages.base_page import BasePage
-from pages.reset_pass_page import ResetPassPage
 import allure
 import locators
 from pages.reset_pass_page import ResetPassPage

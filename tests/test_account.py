@@ -1,9 +1,9 @@
-import pytest
-import helpers
-from pages.profile_page import ProfilePage
-from pages.main_page import MainPage
 import allure
+
+import helpers
 import locators
+from pages.main_page import MainPage
+from pages.profile_page import ProfilePage
 
 
 class TestAccount:

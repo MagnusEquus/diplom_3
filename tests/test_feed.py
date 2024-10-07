@@ -1,4 +1,3 @@
-import time
 import helpers
 from pages.feed_page import FeedPage
 from pages.main_page import MainPage

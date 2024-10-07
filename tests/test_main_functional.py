@@ -1,5 +1,3 @@
-import time
-
 import data
 import helpers
 from pages.login_page import LoginPage

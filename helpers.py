@@ -4,7 +4,6 @@ from pages.main_page import MainPage
 import allure
 import locators
 import data
-import time
 
 
 @allure.step('Создаем юзера с задаными данными')
