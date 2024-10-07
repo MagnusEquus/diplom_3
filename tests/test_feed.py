@@ -12,7 +12,7 @@ import data
 class TestFeed:
 
     @allure.title('если кликнуть на заказ, откроется всплывающее окно с деталями')
-    @allure.description('')
+    @allure.description('Заходим на страницу со списком заказов, открываем первый в списке, проверяем что открылось описание')
     def test_order_popup_opened(self, driver):
         driver.get(locators.FEED_URL)
         page = FeedPage(driver)
@@ -20,7 +20,7 @@ class TestFeed:
         assert page.popup_is_opened()
 
     @allure.title('заказы пользователя из раздела «История заказов» отображаются на странице «Лента заказов»')
-    @allure.description('')
+    @allure.description('Авторизируемся, делаем заказ, смотрим что он появился у пользователя в профиле')
     def test_orders_in_profile_visible_in_feed(self, driver, user):
         helpers.login_user(driver, user['email'], user['password'])
         driver.get(locators.MAIN_URL)
@@ -41,8 +41,8 @@ class TestFeed:
         page = FeedPage(driver)
         assert page.check_if_order_is_in_list(order_number)
 
-    @allure.title('при создании нового заказа счётчик Выполнено за всё время увеличивается')
-    @allure.description('')
+    @allure.title('при создании нового заказа счётчик Выполнено за всё сегодня увеличивается')
+    @allure.description('Авторизируемся, создаем заказ, проверяем что увеличился счетчик заказов за сегодня')
     def test_today_orders_counter_increases(self, driver, user):
         helpers.login_user(driver, user['email'], user['password'])
         driver.get(locators.FEED_URL)
@@ -59,8 +59,8 @@ class TestFeed:
         new_value = page.get_today_orders_count()
         assert new_value > old_value
 
-    @allure.title('')
-    @allure.description('')
+    @allure.title('при создании нового заказа счётчик Выполнено за всё время увеличивается')
+    @allure.description('Авторизируемся, создаем заказ, проверяем что увеличился счетчик заказов за все время')
     def test_overall_orders_counter_increases(self, driver, user):
         helpers.login_user(driver, user['email'], user['password'])
         driver.get(locators.FEED_URL)
@@ -77,8 +77,8 @@ class TestFeed:
         new_value = page.get_overall_orders_count()
         assert new_value > old_value
 
-    @allure.title('')
-    @allure.description('')
+    @allure.title('после оформления заказа его номер появляется в разделе В работе')
+    @allure.description('Оформляем заказ, проверяем что его номер появился в списке заказов в обработке')
     def test_new_orders_are_in_progress(self, driver, user):
         helpers.login_user(driver, user['email'], user['password'])
         driver.get(locators.MAIN_URL)

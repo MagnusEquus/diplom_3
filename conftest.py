@@ -6,9 +6,10 @@ import helpers
 import data
 
 
+@allure.step('Создаем драйвер для кроссбраузерного тестирования')
 @pytest.fixture(params=[
-    'chrome'
-    # ,'firefox'
+    'chrome',
+    'firefox'
 ])
 def driver(request):
     if request.param == 'firefox':

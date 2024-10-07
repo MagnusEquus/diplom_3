@@ -36,6 +36,7 @@ def get_user_token(email, password):
         return token
 
 
+@allure.step('Логинимся под данными кредами')
 def login_user(driver, email, password):
     driver.get(locators.MAIN_URL)
     page = MainPage(driver)

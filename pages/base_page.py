@@ -20,6 +20,7 @@ class BasePage:
         WebDriverWait(self.driver, 10).until(
             expected_conditions.visibility_of_element_located(wait_element))
 
+    @allure.step('Заменяем заглушку в локаторе на нужное значение')
     def variable_locator(self, locator, variable_name, value):
         locator[1] = locator[1].replace(variable_name, str(value))
         WebDriverWait(self.driver, 15).until(expected_conditions.visibility_of_element_located(locator))

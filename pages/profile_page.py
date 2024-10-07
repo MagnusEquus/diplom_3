@@ -14,10 +14,12 @@ class ProfilePage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
+    @allure.step('Переходим на страницу с историей заказов')
     def click_order_history(self):
         WebDriverWait(self.driver, 15).until(expected_conditions.visibility_of_element_located(self.order_history_button))
         self.driver.find_element(*self.order_history_button).click()
 
+    @allure.step('Нажимаем на выход из аккаунта')
     def click_logout(self):
         from pages.login_page import LoginPage
         WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located(self.logout_button))

@@ -19,15 +19,17 @@ class LoginPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
+    @allure.step('Переходим на страницу восстановления пароля')
     def goto_forgot_pass_page(self):
         self.redirect(self.restore_pass_button, ForgotPassPage.restore_button)
 
+    @allure.step('Заполняем поля и входим в аккаунт')
     def login_into_account(self, email, password):
-        # WebDriverWait(self.driver, 10).until(expected_conditions.visibility_of_element_located(self.email_input))
         self.driver.find_element(*self.email_input).send_keys(email)
         self.driver.find_element(*self.password_input).send_keys(password)
         self.driver.find_element(*self.login_button).click()
         WebDriverWait(self.driver, 10).until(expected_conditions.visibility_of_element_located(MainPage.first_bun_drop))
 
+    @allure.step('Переходим на страницу с конструктором')
     def click_constructor_button(self):
         self.redirect(self.constructor_link_button, self.feed_link_button)

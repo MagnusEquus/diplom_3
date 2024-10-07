@@ -13,9 +13,11 @@ class ResetPassPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
+    @allure.step('Нажимаем на кнопку которая показывает пароль')
     def click_show_pass(self):
         self.driver.find_element(*self.show_pass_button).click()
 
+    @allure.step('Проверяем доступен ли импут для пароля')
     def check_if_password_input_is_active(self):
         input_status = self.driver.find_element(*self.new_pass_input_parent).get_attribute("class")
         return 'input_status_active' in input_status
